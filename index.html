@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Music Player</title>
+    <!-- Makes the app look native on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .player-card {
+            background-color: #1e1e1e;
+            width: 100%;
+            max-width: 360px;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        h1 { font-size: 0.9rem; margin-bottom: 8px; color: #a7a7a7; letter-spacing: 1px; }
+        h2 { font-size: 1.4rem; margin-top: 0; margin-bottom: 20px; color: #1db954; }
+        audio { width: 100%; margin-bottom: 20px; }
+        .btn-group { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 20px; }
+        button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            background-color: #333;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        button.active { background-color: #1db954; color: black; }
+        .playlist { text-align: left; background: #282828; border-radius: 10px; overflow: hidden; }
+        .playlist-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid #333;
+            cursor: pointer;
+        }
+        .playlist-item:last-child { border-bottom: none; }
+        .playlist-item.active { color: #1db954; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="player-card">
+    <h1>NOW PLAYING</h1>
+    <h2 id="song-title">Select a Song</h2>
+
+    <audio id="audio-player" controls></audio>
+
+    <div class="btn-group">
+        <button onclick="prevSong()">⏮ Prev</button>
+        <button id="loop-btn" onclick="toggleLoop()">🔁 Playlist</button>
+        <button onclick="nextSong()">Next ⏭</button>
+    </div>
+
+    <div class="playlist" id="playlist"></div>
+</div>
+
+<script>
+    // -------------------------------------------------------------
+    // CHANGE THESE FILE NAMES TO MATCH YOUR MP3 FILES ON GITHUB
+    // -------------------------------------------------------------
+    const songs = [
+        { title: "Song One Name", file: "song1.mp3" },
+        { title: "Song Two Name", file: "song2.mp3" },
+        { title: "Song Three Name", file: "song3.mp3" }
+    ];
+
+    let currentIndex = 0;
+    let isSingleLooping = false;
+
+    const audio = document.getElementById("audio-player");
+    const titleEl = document.getElementById("song-title");
+    const loopBtn = document.getElementById("loop-btn");
+    const playlistEl = document.getElementById("playlist");
+
+    function renderPlaylist() {
+        playlistEl.innerHTML = "";
+        songs.forEach((song, index) => {
+            const item = document.createElement("div");
+            item.className = `playlist-item ${index === currentIndex ? 'active' : ''}`;
+            item.innerText = `${index + 1}. ${song.title}`;
+            item.onclick = () => playSong(index);
+            playlistEl.appendChild(item);
+        });
+    }
+
+    function playSong(index) {
+        currentIndex = index;
+        audio.src = songs[currentIndex].file;
+        titleEl.innerText = songs[currentIndex].title;
+        renderPlaylist();
+        audio.play().catch(e => console.log("User interaction needed to play"));
+    }
+
+    function nextSong() {
+        currentIndex = (currentIndex + 1) % songs.length;
+        playSong(currentIndex);
+    }
+
+    function prevSong() {
+        currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+        playSong(currentIndex);
+    }
+
+    function toggleLoop() {
+        isSingleLooping = !isSingleLooping;
+        if (isSingleLooping) {
+            loopBtn.innerText = "🔂 Single Track";
+            loopBtn.classList.add("active");
+        } else {
+            loopBtn.innerText = "🔁 Playlist";
+            loopBtn.classList.remove("active");
+        }
+    }
+
+    // Handles what happens when a song finishes
+    audio.onended = function() {
+        if (isSingleLooping) {
+            audio.currentTime = 0;
+            audio.play();
+        } else {
+            nextSong(); // Moves to next track automatically
+        }
+    };
+
+    // Initialize player view
+    audio.src = songs[0].file;
+    titleEl.innerText = songs[0].title;
+    renderPlaylist();
+</script>
+
+</body>
+</html>
