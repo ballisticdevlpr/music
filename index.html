@@ -245,34 +245,70 @@
     const playlists = [
         // Regular Playlists
         {
-            id: "pl_favorites",
-            name: "Favorites",
+            id: "pl_phonk",
+            name: "Phonk",
             category: "regular",
             songIds: [1, 2, 3]
         },
         {
-            id: "pl_chill",
-            name: "Chill Vibe",
+            id: "pl_aggressive",
+            name: "Aggressive",
+            category: "regular",
+            songIds: [1, 2, 3]
+        },
+        {
+            id: "pl_hardstyle",
+            name: "Gym Hardstyle",
+            category: "regular",
+            songIds: [2, 4]
+        },
+        {
+            id: "pl_pop",
+            name: "Pop",
+            category: "regular",
+            songIds: [2, 4]
+        },
+        {
+            id: "pl_lofi",
+            name: "Lofi",
             category: "regular",
             songIds: [2, 4]
         },
         // Artist Playlists
         {
-            id: "pl_artist_1",
-            name: "Artist Collection A",
+            id: "pl_tommacdonald",
+            name: "Tom Macdonald",
             category: "artists",
             songIds: [1, 3]
         },
         {
-            id: "pl_artist_2",
-            name: "Artist Collection B",
+            id: "pl_elvispresley",
+            name: "Elvis Presley",
+            category: "artists",
+            songIds: [2, 4]
+        },
+        {
+            id: "pl_goggins",
+            name: "David Goggins",
             category: "artists",
             songIds: [2, 4]
         },
         // Special Playlists
         {
-            id: "pl_workout",
-            name: "Workout Mix",
+            id: "pl_rocky",
+            name: "Rocky",
+            category: "special",
+            songIds: [1, 3, 4]
+        },
+        {
+            id: "pl_myway",
+            name: "My Way",
+            category: "special",
+            songIds: [1, 3, 4]
+        },
+        {
+            id: "pl_gangsta",
+            name: "Gangsta's Paradise",
             category: "special",
             songIds: [1, 3, 4]
         }
@@ -283,9 +319,9 @@
     // =========================================================================
     const MODES = [
         { name: "Single", label: "▶ Mode: Single" },
-        { name: "Single Loop", label: "🔂 Mode: Single Loop" },
-        { name: "Playlist", label: "➡️ Mode: Playlist" },
-        { name: "Playlist Loop", label: "🔁 Mode: Playlist Loop" }
+        { name: "Single Loop", label: "▶ Mode: Single Loop" },
+        { name: "Playlist", label: "▶ Mode: Playlist" },
+        { name: "Playlist Loop", label: "▶ Mode: Playlist Loop" }
     ];
     
     let currentModeIndex = 0;
