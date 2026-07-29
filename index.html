@@ -36,12 +36,12 @@
 
         /* Explore Page Styles */
         h1.header-title {
-            font-size: 2.25rem; /* 1.5x larger */
+            font-size: 2.25rem;
             margin-top: 0;
             margin-bottom: 20px;
             text-align: center;
             font-weight: 800;
-            /* Non-linear radial gradient with half-saturated magenta, yellow, and blue */
+            /* Non-linear radial gradient */
             background: radial-gradient(circle at 25% 25%, #d149a4 0%, #e0c946 55%, #5499db 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -77,6 +77,15 @@
             margin-left: 12px;
         }
 
+        /* Golden Yellow Special Header Divider */
+        .section-divider.special {
+            color: #ffd700;
+        }
+        .section-divider.special::before,
+        .section-divider.special::after {
+            border-bottom-color: #ffd700;
+        }
+
         .playlist-buttons {
             display: flex;
             flex-direction: column;
@@ -99,6 +108,11 @@
         }
         .playlist-card-btn:active { background-color: #333; }
         .playlist-card-btn span { color: #1db954; font-size: 0.85rem; }
+
+        /* Golden Yellow Track Count for Special Playlists */
+        .playlist-card-btn.special-btn span {
+            color: #ffd700;
+        }
 
         /* Playlist Page Styles */
         .top-bar {
@@ -303,20 +317,21 @@
         ];
 
         categories.forEach(cat => {
-            // Filter playlists for this section
             const catPlaylists = playlists.filter(p => p.category === cat.key);
 
             if (catPlaylists.length > 0) {
                 // Render Section Divider Header Line
                 const divider = document.createElement("div");
-                divider.className = "section-divider";
-                divider.innerText = cat.label;
+                const isSpecial = cat.key === "special";
+                
+                divider.className = `section-divider ${isSpecial ? 'special' : ''}`;
+                divider.innerText = isSpecial ? `◆ ${cat.label} ◆` : cat.label;
                 exploreButtons.appendChild(divider);
 
                 // Render Playlists under this section
                 catPlaylists.forEach(pl => {
                     const btn = document.createElement("button");
-                    btn.className = "playlist-card-btn";
+                    btn.className = `playlist-card-btn ${isSpecial ? 'special-btn' : ''}`;
                     btn.innerHTML = `${pl.name} <span>${pl.songIds.length} tracks ›</span>`;
                     btn.onclick = () => openPlaylist(pl.id);
                     exploreButtons.appendChild(btn);
