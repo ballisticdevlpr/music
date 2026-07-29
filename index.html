@@ -14,10 +14,10 @@
             color: #ffffff;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
             margin: 0;
-            padding: 20px;
+            padding: 20px 20px 0 20px;
             box-sizing: border-box;
         }
         .app-card {
@@ -25,9 +25,12 @@
             width: 100%;
             max-width: 380px;
             padding: 24px;
-            border-radius: 20px;
+            padding-bottom: 40px;
+            border-radius: 10px 10px 0 0; /* 50% corner reduction on top, 0 on bottom to extend infinitely */
+            min-height: calc(100vh - 20px); /* Fills down to the bottom edge of screen */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
             position: relative;
+            box-sizing: border-box;
         }
 
         /* Views management */
@@ -36,6 +39,7 @@
 
         /* Explore Page Styles */
         h1.header-title {
+            font-family: "Biwa Display Bold", "Biwa Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             font-size: 2.25rem;
             margin-top: 0;
             margin-bottom: 20px;
@@ -98,7 +102,7 @@
             border: 1px solid #333;
             color: #ffffff;
             padding: 14px 16px;
-            border-radius: 12px;
+            border-radius: 6px; /* Reduced by 50% from 12px */
             font-size: 0.95rem;
             font-weight: 600;
             text-align: left;
@@ -126,8 +130,8 @@
             left: 0;
             height: 100%;
             width: 100%;
-            /* Top edge covers ~52%, bottom edge slants inward to ~38% */
-            clip-path: polygon(0 0, 52% 0, 38% 100%, 0 100%);
+            /* Extends to 70% on top, slanting ~30 deg inwards to 58% at bottom */
+            clip-path: polygon(0 0, 70% 0, 58% 100%, 0 100%);
             background-size: cover;
             background-position: center;
             z-index: 1;
@@ -170,7 +174,7 @@
             color: #1db954;
             font-weight: bold;
             padding: 8px 14px;
-            border-radius: 20px;
+            border-radius: 10px; /* Reduced by 50% from 20px */
             cursor: pointer;
             font-size: 0.9rem;
             z-index: 10;
@@ -202,7 +206,7 @@
             color: white;
             border: none;
             padding: 10px 20px;
-            border-radius: 20px;
+            border-radius: 10px; /* Reduced by 50% from 20px */
             font-weight: bold;
             font-size: 0.9rem;
             cursor: pointer;
@@ -213,7 +217,7 @@
         /* Tracklist */
         .tracklist {
             background: #282828;
-            border-radius: 12px;
+            border-radius: 6px; /* Reduced by 50% from 12px */
             overflow: hidden;
             max-height: 250px;
             overflow-y: auto;
@@ -426,7 +430,7 @@
                     btn.innerHTML = `
                         ${bgHTML}
                         <div>${pl.name}</div>
-                        <span>${pl.songIds.length} tracks ▶</span>
+                        <span>${pl.songIds.length} tracks ›</span>
                     `;
                     
                     btn.onclick = () => openPlaylist(pl.id);
