@@ -265,7 +265,7 @@
     <!-- PAGE 2: PLAYLIST PAGE -->
     <div id="playlist-page" class="page">
         <div class="top-bar">
-            <button class="back-btn" onclick="showExplorePage()">←</button>
+            <button class="back-btn" onclick="showExplorePage()">← Explore</button>
             <h2 id="current-playlist-name" class="playlist-title">Playlist</h2>
         </div>
 
@@ -411,6 +411,14 @@
     const audio = document.getElementById("audio-player");
     const modeBtn = document.getElementById("mode-btn");
 
+    function resetScrollPosition() {
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        const appCard = document.querySelector('.app-card');
+        if (appCard) appCard.scrollTop = 0;
+    }
+
     function getSongById(id) {
         return songLibrary.find(song => song.id === id);
     }
@@ -476,6 +484,7 @@
     function showExplorePage() {
         playlistPage.classList.remove("active");
         explorePage.classList.add("active");
+        resetScrollPosition();
     }
 
     // Navigation: Open Playlist Page
@@ -488,6 +497,8 @@
 
         explorePage.classList.remove("active");
         playlistPage.classList.add("active");
+        
+        resetScrollPosition();
 
         if (activePlaylist.songIds.length > 0) {
             loadTrack(0, false);
