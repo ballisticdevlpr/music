@@ -81,6 +81,14 @@
             margin-left: 12px;
         }
 
+        /* Continuous line when empty */
+        .section-divider:empty::before {
+            margin-right: 0;
+        }
+        .section-divider:empty::after {
+            margin-left: 0;
+        }
+
         /* Golden Yellow Special Header Divider */
         .section-divider.special {
             color: #ffd700;
@@ -88,6 +96,16 @@
         .section-divider.special::before,
         .section-divider.special::after {
             border-bottom-color: #ffd700;
+        }
+
+        /* Footer Copyright Text */
+        .copyright-text {
+            text-align: center;
+            color: #666666;
+            font-size: 0.75rem;
+            margin-top: 12px;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
         }
 
         .playlist-buttons {
@@ -161,7 +179,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             min-height: 36px;
         }
         .back-btn {
@@ -250,6 +268,9 @@
             <button class="back-btn" onclick="showExplorePage()">← Explore</button>
             <h2 id="current-playlist-name" class="playlist-title">Playlist</h2>
         </div>
+
+        <!-- Header line right below top-bar -->
+        <div class="section-divider"></div>
 
         <div class="now-playing">
             <h3>NOW PLAYING</h3>
@@ -394,7 +415,7 @@
         return songLibrary.find(song => song.id === id);
     }
 
-    // Render Explore Page with categorized header lines & trapezium background images
+    // Render Explore Page with categorized header lines, trapezium background images, and footer copyright
     function initExplorePage() {
         exploreButtons.innerHTML = "";
 
@@ -438,6 +459,17 @@
                 });
             }
         });
+
+        // Bottom section divider line on Explore page
+        const bottomDivider = document.createElement("div");
+        bottomDivider.className = "section-divider";
+        exploreButtons.appendChild(bottomDivider);
+
+        // Copyright text
+        const copyrightEl = document.createElement("div");
+        copyrightEl.className = "copyright-text";
+        copyrightEl.innerText = "copyright ballisticdev @ 2026";
+        exploreButtons.appendChild(copyrightEl);
     }
 
     // Navigation: Show Explore Page
