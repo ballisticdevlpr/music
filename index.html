@@ -92,6 +92,8 @@
             gap: 10px;
         }
         .playlist-card-btn {
+            position: relative;
+            overflow: hidden; /* Keeps trapezium mask within rounded corners */
             background-color: #282828;
             border: 1px solid #333;
             color: #ffffff;
@@ -104,9 +106,44 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.1s;
         }
-        .playlist-card-btn:active { background-color: #333; }
+        .playlist-card-btn:active { 
+            background-color: #333; 
+            transform: scale(0.99);
+        }
+
+        /* Elevate button content above the background image */
+        .playlist-card-btn > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Inverted Trapezium Background Mask */
+        .playlist-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            /* Top edge covers ~52%, bottom edge slants inward to ~38% */
+            clip-path: polygon(0 0, 52% 0, 38% 100%, 0 100%);
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+
+        /* Dark overlay gradient to ensure left text remains readable */
+        .playlist-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(18, 18, 18, 0.75) 0%, rgba(18, 18, 18, 0.25) 100%);
+        }
+
         .playlist-card-btn span { color: #1db954; font-size: 0.85rem; }
 
         /* Golden Yellow Track Count for Special Playlists */
@@ -240,7 +277,7 @@
     ];
 
     // =========================================================================
-    // 2. PLAYLIST DEFINITIONS (Grouped into "regular", "artists", or "special")
+    // 2. PLAYLIST DEFINITIONS (Add your image filenames here)
     // =========================================================================
     const playlists = [
         // Regular Playlists
@@ -248,30 +285,35 @@
             id: "pl_phonk",
             name: "Phonk",
             category: "regular",
+            image: "phonk.jpg",
             songIds: [1, 2, 3]
         },
         {
             id: "pl_aggressive",
             name: "Aggressive",
             category: "regular",
+            image: "aggressive.jpg",
             songIds: [1, 2, 3]
         },
         {
             id: "pl_hardstyle",
             name: "Gym Hardstyle",
             category: "regular",
+            image: "hardstyle.jpg",
             songIds: [2, 4]
         },
         {
             id: "pl_pop",
             name: "Pop",
             category: "regular",
+            image: "pop.jpg",
             songIds: [2, 4]
         },
         {
             id: "pl_lofi",
             name: "Lofi",
             category: "regular",
+            image: "lofi.jpg",
             songIds: [2, 4]
         },
         // Artist Playlists
@@ -279,18 +321,21 @@
             id: "pl_tommacdonald",
             name: "Tom Macdonald",
             category: "artists",
+            image: "tommacdonald.jpg",
             songIds: [1, 3]
         },
         {
             id: "pl_elvispresley",
             name: "Elvis Presley",
             category: "artists",
+            image: "elvispresley.jpg",
             songIds: [2, 4]
         },
         {
             id: "pl_goggins",
             name: "David Goggins",
             category: "artists",
+            image: "goggins.jpg",
             songIds: [2, 4]
         },
         // Special Playlists
@@ -298,18 +343,21 @@
             id: "pl_rocky",
             name: "Rocky",
             category: "special",
+            image: "rocky.jpg",
             songIds: [1, 3, 4]
         },
         {
             id: "pl_myway",
             name: "My Way",
             category: "special",
+            image: "myway.jpg",
             songIds: [1, 3, 4]
         },
         {
             id: "pl_gangsta",
             name: "Gangsta's Paradise",
             category: "special",
+            image: "gangsta.jpg",
             songIds: [1, 3, 4]
         }
     ];
@@ -342,7 +390,7 @@
         return songLibrary.find(song => song.id === id);
     }
 
-    // Render Explore Page with categorized header lines
+    // Render Explore Page with categorized header lines & trapezium background images
     function initExplorePage() {
         exploreButtons.innerHTML = "";
 
@@ -368,7 +416,19 @@
                 catPlaylists.forEach(pl => {
                     const btn = document.createElement("button");
                     btn.className = `playlist-card-btn ${isSpecial ? 'special-btn' : ''}`;
-                    btn.innerHTML = `${pl.name} <span>${pl.songIds.length} tracks ›</span>`;
+
+                    // Insert trapezium background image if specified
+                    let bgHTML = "";
+                    if (pl.image) {
+                        bgHTML = `<div class="playlist-bg" style="background-image: url('${pl.image}');"></div>`;
+                    }
+
+                    btn.innerHTML = `
+                        ${bgHTML}
+                        <div>${pl.name}</div>
+                        <span>${pl.songIds.length} tracks ›</span>
+                    `;
+                    
                     btn.onclick = () => openPlaylist(pl.id);
                     exploreButtons.appendChild(btn);
                 });
