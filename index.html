@@ -265,7 +265,7 @@
     <!-- PAGE 2: PLAYLIST PAGE -->
     <div id="playlist-page" class="page">
         <div class="top-bar">
-            <button class="back-btn" onclick="showExplorePage()">←</button>
+            <button class="back-btn" onclick="showExplorePage()">← Explore</button>
             <h2 id="current-playlist-name" class="playlist-title">Playlist</h2>
         </div>
 
@@ -292,17 +292,17 @@
 
 <script>
     // =========================================================================
-    // 1. MASTER SONG LIBRARY (Define each song once with a unique numerical ID)
+    // 1. MASTER SONG LIBRARY (Paths updated to audio/ directory)
     // =========================================================================
     const songLibrary = [
-        { id: 1, title: "Song One", file: "song1.mp3" },
-        { id: 2, title: "Song Two", file: "song2.mp3" },
-        { id: 3, title: "Song Three", file: "song3.mp3" },
-        { id: 4, title: "Song Four", file: "song4.mp3" }
+        { id: 1, title: "Song One", file: "audio/song1.mp3" },
+        { id: 2, title: "Song Two", file: "audio/song2.mp3" },
+        { id: 3, title: "Song Three", file: "audio/song3.mp3" },
+        { id: 4, title: "Song Four", file: "audio/song4.mp3" }
     ];
 
     // =========================================================================
-    // 2. PLAYLIST DEFINITIONS (Add your image filenames here)
+    // 2. PLAYLIST DEFINITIONS (Paths updated to images/ directory)
     // =========================================================================
     const playlists = [
         // Regular Playlists
@@ -310,35 +310,35 @@
             id: "pl_phonk",
             name: "Phonk",
             category: "regular",
-            image: "phonk.jpg",
+            image: "images/phonk.jpg",
             songIds: [1, 2, 3]
         },
         {
             id: "pl_aggressive",
             name: "Aggressive",
             category: "regular",
-            image: "aggressive.jpg",
+            image: "images/aggressive.jpg",
             songIds: [1, 2, 3]
         },
         {
             id: "pl_hardstyle",
             name: "Gym Hardstyle",
             category: "regular",
-            image: "hardstyle.jpg",
+            image: "images/hardstyle.jpg",
             songIds: [2, 4]
         },
         {
             id: "pl_pop",
             name: "Pop",
             category: "regular",
-            image: "pop.jpg",
+            image: "images/pop.jpg",
             songIds: [2, 4]
         },
         {
             id: "pl_lofi",
             name: "Lofi",
             category: "regular",
-            image: "lofi.jpg",
+            image: "images/lofi.jpg",
             songIds: [2, 4]
         },
         // Artist Playlists
@@ -346,21 +346,21 @@
             id: "pl_tommacdonald",
             name: "Tom Macdonald",
             category: "artists",
-            image: "tommacdonald.jpg",
+            image: "images/tommacdonald.jpg",
             songIds: [1, 3]
         },
         {
             id: "pl_elvispresley",
             name: "Elvis Presley",
             category: "artists",
-            image: "elvispresley.jpg",
+            image: "images/elvispresley.jpg",
             songIds: [2, 4]
         },
         {
             id: "pl_goggins",
             name: "David Goggins",
             category: "artists",
-            image: "goggins.jpg",
+            image: "images/goggins.jpg",
             songIds: [2, 4]
         },
         // Special Playlists
@@ -368,21 +368,21 @@
             id: "pl_rocky",
             name: "Rocky",
             category: "special",
-            image: "rocky.jpg",
+            image: "images/rocky.jpg",
             songIds: [1, 3, 4]
         },
         {
             id: "pl_myway",
             name: "My Way",
             category: "special",
-            image: "myway.jpg",
+            image: "images/myway.jpg",
             songIds: [1, 3, 4]
         },
         {
             id: "pl_gangsta",
             name: "Gangsta's Paradise",
             category: "special",
-            image: "gangsta.jpg",
+            image: "images/gangsta.jpg",
             songIds: [1, 3, 4]
         }
     ];
@@ -476,7 +476,7 @@
         // Copyright text
         const copyrightEl = document.createElement("div");
         copyrightEl.className = "copyright-text";
-        copyrightEl.innerText = "© 2026 ballisticdevlpr. All rights reserved. ";
+        copyrightEl.innerText = "copyright ballisticdev @ 2026";
         exploreButtons.appendChild(copyrightEl);
     }
 
