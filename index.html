@@ -65,14 +65,20 @@
         .playlist-card-btn:active { background-color: #333; }
         .playlist-card-btn span { color: #1db954; font-size: 0.85rem; }
 
-        /* Playlist Page Styles */
+        /* Playlist Page Styles - Fix 1: True centering for header */
         .top-bar {
+            position: relative;
             display: flex;
+            justify-content: center;
             align-items: center;
             margin-bottom: 20px;
-            position: relative;
+            min-height: 36px;
         }
         .back-btn {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
             background: #282828;
             border: none;
             color: #1db954;
@@ -81,13 +87,13 @@
             border-radius: 20px;
             cursor: pointer;
             font-size: 0.9rem;
+            z-index: 10;
         }
         .playlist-title {
-            flex-grow: 1;
             text-align: center;
             font-size: 1.2rem;
             margin: 0;
-            padding-right: 50px; /* Offset for back button alignment */
+            width: 100%;
         }
         
         .now-playing {
@@ -99,7 +105,7 @@
 
         audio { width: 100%; margin-bottom: 16px; }
 
-        /* Controls */
+        /* Controls - Fix 2: Uniform dark style for all modes */
         .controls-row {
             display: flex;
             justify-content: center;
@@ -117,7 +123,6 @@
             width: 100%;
             text-align: center;
         }
-        .mode-btn.active { background-color: #1db954; color: #000; }
 
         /* Tracklist */
         .tracklist {
@@ -164,7 +169,7 @@
         <audio id="audio-player" controls></audio>
 
         <div class="controls-row">
-            <button id="mode-btn" class="mode-btn" onclick="cyclePlayMode()">Mode: Single</button>
+            <button id="mode-btn" class="mode-btn" onclick="cyclePlayMode()">▶ Mode: Single</button>
         </div>
 
         <div id="tracklist-container" class="tracklist">
@@ -315,11 +320,6 @@
 
     function updateModeButtonUI() {
         modeBtn.innerText = MODES[currentModeIndex].label;
-        if (currentModeIndex > 0) {
-            modeBtn.classList.add("active");
-        } else {
-            modeBtn.classList.remove("active");
-        }
     }
 
     // =========================================================================
