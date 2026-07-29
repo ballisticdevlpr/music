@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Music Player</title>
+    
+    <!-- Website Favicon & App Icon -->
+    <link rel="icon" type="image/jpeg" href="images/icon.jpg">
+    <link rel="apple-touch-icon" href="images/icon.jpg">
+
     <!-- Native iOS PWA behavior -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -26,8 +31,8 @@
             max-width: 380px;
             padding: 24px;
             padding-bottom: 40px;
-            border-radius: 10px 10px 0 0; /* 50% corner reduction on top, 0 on bottom to extend infinitely */
-            min-height: calc(100vh - 20px); /* Fills down to the bottom edge of screen */
+            border-radius: 10px 10px 0 0;
+            min-height: calc(100vh - 20px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
             position: relative;
             box-sizing: border-box;
@@ -45,7 +50,6 @@
             margin-bottom: 20px;
             text-align: center;
             font-weight: 800;
-            /* Non-linear radial gradient */
             background: radial-gradient(circle at 25% 25%, #d149a4 0%, #e0c946 55%, #5499db 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -81,7 +85,6 @@
             margin-left: 12px;
         }
 
-        /* Continuous line when empty */
         .section-divider:empty::before {
             margin-right: 0;
         }
@@ -115,12 +118,12 @@
         }
         .playlist-card-btn {
             position: relative;
-            overflow: hidden; /* Keeps trapezium mask within rounded corners */
+            overflow: hidden;
             background-color: #282828;
             border: 1px solid #333;
             color: #ffffff;
             padding: 14px 16px;
-            border-radius: 6px; /* Reduced by 50% from 12px */
+            border-radius: 6px;
             font-size: 0.95rem;
             font-weight: 600;
             text-align: left;
@@ -135,7 +138,6 @@
             transform: scale(0.99);
         }
 
-        /* Elevate button content above the background image */
         .playlist-card-btn > * {
             position: relative;
             z-index: 2;
@@ -148,14 +150,12 @@
             left: 0;
             height: 100%;
             width: 100%;
-            /* Extends to 70% on top, slanting ~30 deg inwards to 58% at bottom */
             clip-path: polygon(0 0, 70% 0, 58% 100%, 0 100%);
             background-size: cover;
             background-position: center;
             z-index: 1;
         }
 
-        /* Dark overlay gradient to ensure left text remains readable */
         .playlist-bg::after {
             content: '';
             position: absolute;
@@ -168,7 +168,6 @@
 
         .playlist-card-btn span { color: #1db954; font-size: 0.85rem; }
 
-        /* Golden Yellow Track Count for Special Playlists */
         .playlist-card-btn.special-btn span {
             color: #ffd700;
         }
@@ -192,7 +191,7 @@
             color: #1db954;
             font-weight: bold;
             padding: 8px 14px;
-            border-radius: 10px; /* Reduced by 50% from 20px */
+            border-radius: 10px;
             cursor: pointer;
             font-size: 0.9rem;
             z-index: 10;
@@ -224,7 +223,7 @@
             color: white;
             border: none;
             padding: 10px 20px;
-            border-radius: 10px; /* Reduced by 50% from 20px */
+            border-radius: 10px;
             font-weight: bold;
             font-size: 0.9rem;
             cursor: pointer;
@@ -235,7 +234,7 @@
         /* Tracklist */
         .tracklist {
             background: #282828;
-            border-radius: 6px; /* Reduced by 50% from 12px */
+            border-radius: 6px;
             overflow: hidden;
             max-height: 250px;
             overflow-y: auto;
@@ -265,11 +264,10 @@
     <!-- PAGE 2: PLAYLIST PAGE -->
     <div id="playlist-page" class="page">
         <div class="top-bar">
-            <button class="back-btn" onclick="showExplorePage()">←</button>
+            <button class="back-btn" onclick="showExplorePage()">← Explore</button>
             <h2 id="current-playlist-name" class="playlist-title">Playlist</h2>
         </div>
 
-        <!-- Header line right below top-bar -->
         <div class="section-divider"></div>
 
         <div class="now-playing">
@@ -292,7 +290,7 @@
 
 <script>
     // =========================================================================
-    // 1. MASTER SONG LIBRARY (Paths updated to audio/ directory)
+    // 1. MASTER SONG LIBRARY
     // =========================================================================
     const songLibrary = [
         { id: 1, title: "Song One", file: "audio/song1.mp3" },
@@ -302,7 +300,7 @@
     ];
 
     // =========================================================================
-    // 2. PLAYLIST DEFINITIONS (Paths updated to images/ directory)
+    // 2. PLAYLIST DEFINITIONS
     // =========================================================================
     const playlists = [
         // Regular Playlists
@@ -423,7 +421,6 @@
         return songLibrary.find(song => song.id === id);
     }
 
-    // Render Explore Page with categorized header lines, trapezium background images, and footer copyright
     function initExplorePage() {
         exploreButtons.innerHTML = "";
 
@@ -437,7 +434,6 @@
             const catPlaylists = playlists.filter(p => p.category === cat.key);
 
             if (catPlaylists.length > 0) {
-                // Render Section Divider Header Line
                 const divider = document.createElement("div");
                 const isSpecial = cat.key === "special";
                 
@@ -445,12 +441,10 @@
                 divider.innerText = isSpecial ? `◆ ${cat.label} ◆` : cat.label;
                 exploreButtons.appendChild(divider);
 
-                // Render Playlists under this section
                 catPlaylists.forEach(pl => {
                     const btn = document.createElement("button");
                     btn.className = `playlist-card-btn ${isSpecial ? 'special-btn' : ''}`;
 
-                    // Insert trapezium background image if specified
                     let bgHTML = "";
                     if (pl.image) {
                         bgHTML = `<div class="playlist-bg" style="background-image: url('${pl.image}');"></div>`;
@@ -468,26 +462,22 @@
             }
         });
 
-        // Bottom section divider line on Explore page
         const bottomDivider = document.createElement("div");
         bottomDivider.className = "section-divider";
         exploreButtons.appendChild(bottomDivider);
 
-        // Copyright text
         const copyrightEl = document.createElement("div");
         copyrightEl.className = "copyright-text";
         copyrightEl.innerText = "copyright ballisticdev @ 2026";
         exploreButtons.appendChild(copyrightEl);
     }
 
-    // Navigation: Show Explore Page
     function showExplorePage() {
         playlistPage.classList.remove("active");
         explorePage.classList.add("active");
         resetScrollPosition();
     }
 
-    // Navigation: Open Playlist Page
     function openPlaylist(playlistId) {
         activePlaylist = playlists.find(p => p.id === playlistId);
         if (!activePlaylist) return;
@@ -545,7 +535,6 @@
         modeBtn.innerText = MODES[currentModeIndex].label;
     }
 
-    // Automatic track progression logic
     audio.onended = function() {
         const mode = MODES[currentModeIndex].name;
 
@@ -567,7 +556,6 @@
         }
     };
 
-    // Initialize App
     initExplorePage();
     updateModeButtonUI();
 </script>
