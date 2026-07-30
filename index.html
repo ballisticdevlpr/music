@@ -240,13 +240,27 @@
             overflow-y: auto;
         }
         .track-item {
-            padding: 12px 16px;
+            padding: 10px 16px;
             border-bottom: 1px solid #333;
             cursor: pointer;
-            font-size: 0.95rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
         .track-item:last-child { border-bottom: none; }
-        .track-item.playing { color: #1db954; font-weight: bold; }
+        .track-name {
+            font-size: 0.95rem;
+            color: #ffffff;
+        }
+        .track-item.playing .track-name {
+            color: #1db954;
+            font-weight: bold;
+        }
+        .track-artist {
+            font-size: 0.8rem;
+            color: #a7a7a7;
+            font-weight: normal;
+        }
     </style>
 </head>
 <body>
@@ -293,10 +307,10 @@
     // 1. MASTER SONG LIBRARY
     // =========================================================================
     const songLibrary = [
-        { id: 1, title: "Song One", file: "audio/song1.mp3" },
-        { id: 2, title: "Song Two", file: "audio/song2.mp3" },
-        { id: 3, title: "Song Three", file: "audio/song3.mp3" },
-        { id: 4, title: "Song Four", file: "audio/song4.mp3" }
+        { id: 1, title: "Song One", artist: "Artist Name", file: "audio/song1.mp3" },
+        { id: 2, title: "Song Two", artist: "Artist Name", file: "audio/song2.mp3" },
+        { id: 3, title: "Song Three", artist: "Artist Name", file: "audio/song3.mp3" },
+        { id: 4, title: "Song Four", artist: "Artist Name", file: "audio/song4.mp3" }
     ];
 
     // =========================================================================
@@ -503,7 +517,10 @@
 
             const item = document.createElement("div");
             item.className = `track-item ${index === currentTrackIndex ? 'playing' : ''}`;
-            item.innerText = `${index + 1}. ${song.title}`;
+            item.innerHTML = `
+                <div class="track-name">${index + 1}. ${song.title}</div>
+                <div class="track-artist">${song.artist || "Unknown Artist"}</div>
+            `;
             item.onclick = () => loadTrack(index, true);
             tracklistContainer.appendChild(item);
         });
